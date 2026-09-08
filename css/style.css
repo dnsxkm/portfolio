@@ -1,0 +1,56 @@
+/* ============ 1. 리셋 ============ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;   /* Step 4 부드러운 스크롤의 절반이 이 한 줄 */
+}
+
+/* ============ 2. 디자인 토큰 (라이트) ============ */
+:root {
+  /* 색상 */
+  --color-bg:        #ffffff;
+  --color-surface:   #f8f9fa;   /* 카드/섹션 배경 */
+  --color-text:      #1a1a1a;
+  --color-text-weak: #666666;   /* 보조 텍스트 */
+  --color-border:    #e5e5e5;
+  --color-primary:   #2563eb;
+  --color-error:     #dc2626;
+  --color-success:   #16a34a;
+  --shadow-card:     0 2px 8px rgba(0, 0, 0, 0.08);
+
+  /* 폰트 */
+  --font-body: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+  --fs-sm:   0.875rem;
+  --fs-base: 1rem;
+  --fs-lg:   1.25rem;
+  --fs-xl:   2rem;
+
+  /* 간격 */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-6: 4rem;
+
+  /* 기타 */
+  --radius:     8px;
+  --transition: 0.3s ease;
+  --max-width:  1100px;
+}
+
+/* ============ 3. 디자인 토큰 (다크) — 직접 채우세요 ============ */
+[data-theme="dark"] {
+  --color-bg:        #121212;
+  --color-surface:   #1e1e1e;
+  --color-text:      ???;
+  --color-text-weak: ???;
+  --color-border:    ???;
+  --color-primary:   ???;
+  --color-error:     ???;
+  --color-success:   ???;
+  --shadow-card:     0 2px 8px rgba(0, 0, 0, 0.4);
+}

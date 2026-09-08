@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>김동석</title>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#hero" class="logo">김동석</a>
+
+            <button type="button" class="nav-toggle" aria-label="메뉴 열기" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+
+            <ul class="nav-menu">
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+
+            <button type="button" class="theme-toggle" aria-label="다크 모드 전환">dark mode</button>
+        </nav>
+    </header>
+    <main>
+        <!-- =========== Hero =========== -->
+        <section id="hero">
+            <h1>안녕하세요, 김동석입니다.</h1>
+            <p>숭실대학교 AI소프트웨어학부 재학중인 학생입니다.</p> 
+
+            <div class="hero-actions">
+                <a href="#projects" class="btn btn-primary">프로젝트 보기</a>
+                <a href="#contact" class="btn btn-outline">연락하기</a>
+            </div>
+        </section>
+
+        <!-- =========== About =========== -->
+        <section id="about">
+            <h2>About Me</h2>
+            <div class="about-inner">
+                <img src="images/profile.jpg" alt="김동석 프로필 사진" class="profile-img" />
+
+                <div class="about-text">
+                    <p>양자컴퓨팅과 AI에 관심이 있는 숭실대 AI소프트웨어학부 재학 중인 2학년 학생입니다.</p>
+                    <p>현재는 웹 프론트엔드 기초를 다지며 포트폴리오를 만들고 있습니다.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========== Skills =========== -->
+        <section id="skills">
+            <h2>Skills</h2>
+            <ul class="skill-list">
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+                <li>Python</li>
+                <li>C++</li>
+                <li>Java</li>
+            </ul>
+        </section>
+
+        <!-- =========== Projects =========== -->
+        <section id="projects">
+            <h2>Projects</h2>
+            <div id="projects-list" class="projects-grid">
+
+            </div>
+        </section>
+
+        <!-- =========== Contact =========== -->
+        <section id="contact">
+            <h2>Contact</h2>
+            <form id="contact-form" novalidate>
+
+                <div class="form-field">
+                    <label for="name">이름</label>
+                    <input type="text" id="name" name="name" />
+                    <p class="error-msg" id="name-error"></p>
+                </div>
+
+                <div class="form-field">
+                    <label for="email">이메일</label>
+                    <input type="email" id="email" name="email" />
+                    <p class="error-msg" id="email-error"></p>
+                </div>
+
+                <div class="form-field">
+                    <label for="message">메시지</label>
+                    <textarea id="message" name="message" rows="5"></textarea>
+                    <p class="error-msg" id="message-error"></p>    
+                </div>
+
+                <button type="submit" class="btn btn-primary">보내기</button>
+                <p class="success-msg" id="form-success"></p>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2026 김동석. All rights reserved.</p>
+        <ul class="social-links">
+            <li><a href="https://github.com/dnsxkm" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+        </ul>
+    </footer>
+    <button type="button" class="to-top" aria-label="맨 위로">↑</button>
+    <script src="js/main.js" defer></script>
+
+</body>
+</html>
