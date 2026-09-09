@@ -5,6 +5,8 @@
    0. 설정값 (README에 명시하는 기준값들)
    ========================================================== */
 const GITHUB_USERNAME      = 'dnsxkm';
+// Featured 섹션에서 이미 크게 소개한 저장소 → 아래 자동 목록에서는 제외해 중복을 막는다
+const FEATURED_REPOS       = ['Brokoin', 'coin-backend'];
 const API_URL              = `https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=100`;
 const NAV_SCROLL_THRESHOLD = 60;    // 헤더 배경이 바뀌는 스크롤 위치(px)
 const TOP_BTN_THRESHOLD    = 300;   // 맨 위로 버튼이 나타나는 스크롤 위치(px)
@@ -207,7 +209,8 @@ const loadProjects = async () => {
     const data = await response.json();
 
     // filter: 다른 사람 저장소를 복제한 fork 는 제외
-    const repos = data.filter((repo) => !repo.fork);
+    // filter: fork 저장소와 Featured 섹션에 이미 소개한 저장소를 제외
+    const repos = data.filter((repo) => !repo.fork && !FEATURED_REPOS.includes(repo.name));
 
     if (repos.length === 0) {
       renderEmpty();                                 // 상태 ④: 빈 데이터

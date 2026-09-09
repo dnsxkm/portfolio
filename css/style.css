@@ -371,6 +371,98 @@ nav {
 }
 
 /* ==========================================================
+   10-A. Featured — 대표 프로젝트 (직접 작성한 앱)
+   GitHub 자동 목록과 구분되도록 카드 1개를 크게 배치한다.
+   ========================================================== */
+.featured-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-primary);   /* 강조용 세로 라인 */
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+}
+
+.featured-head h3 {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  font-size: var(--fs-xl);
+}
+
+.badge {
+  padding: 2px var(--space-1);
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: #ffffff;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+
+.featured-tagline {
+  margin-top: var(--space-1);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.featured-summary {
+  color: var(--color-text-weak);
+}
+
+.featured-features {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  list-style: none;
+  font-size: var(--fs-sm);
+}
+
+.featured-features li {
+  padding-left: var(--space-2);
+  border-left: 2px solid var(--color-border);
+  color: var(--color-text-weak);
+}
+
+.featured-features strong {
+  color: var(--color-text);
+}
+
+/* 기술 스택 — Skills 섹션과 같은 알약 모양으로 통일 */
+.featured-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  list-style: none;
+}
+
+.featured-stack li {
+  padding: 2px var(--space-2);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  font-size: var(--fs-sm);
+  color: var(--color-text-weak);
+}
+
+.featured-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+@media (min-width: 768px) {
+  .featured-features {
+    display: grid;                                   /* 넓은 화면에서 2열로 */
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-2);
+  }
+}
+
+/* ==========================================================
    11. Contact 폼
    ========================================================== */
 #contact-form {

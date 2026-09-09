@@ -46,7 +46,7 @@ portfolio/
 | 브레이크포인트 | 변화 |
 |---|---|
 | 기본 (~767px) | 세로 1단, 내비게이션은 햄버거 드롭다운 |
-| 768px 이상 | 내비게이션 가로 배치, About 사진·글 2단 |
+| 768px 이상 | 내비게이션 가로 배치, About 사진·글 2단, Featured 기능 목록 2열 |
 | 1024px 이상 | 프로필 이미지 확대, Hero 높이 증가 |
 
 - **내비게이션**: Flexbox — 로고를 왼쪽, `margin-right: auto` 로 나머지를 오른쪽으로 밀어냄
@@ -66,7 +66,21 @@ portfolio/
 > **기준값 요약** — 스크롤 탑 버튼 300px · 네비게이션 배경 60px · Observer threshold 0.2
 > (`js/main.js` 상단 상수에서 변경 가능)
 
-### 3. GitHub API 연동
+### 3. 대표 프로젝트 — 코인 레벨 (iOS)
+
+직접 개발해 App Store에 출시한 암호화폐 시장 관측 앱을 Projects 위 **Featured 섹션**에 별도로 소개합니다.
+GitHub API가 자동으로 불러오는 목록과 달리, 이 섹션은 직접 작성한 마크업입니다.
+
+- App Store: https://apps.apple.com/kr/app/코인-레벨/id6805023348
+- iOS 앱 소스: https://github.com/dnsxkm/Brokoin
+- 백엔드 소스: https://github.com/dnsxkm/coin-backend
+
+바이낸스 무기한 선물 시장 데이터를 실시간으로 받아 캔들 차트 · 지지/저항 · 고래 흐름 · 강제 청산 ·
+시장 전체 지표를 보여줍니다. 로그인 · 인앱 결제 · 광고가 없습니다.
+
+> `js/main.js` 의 `FEATURED_REPOS` 배열에 두 저장소를 등록해, 아래 자동 목록에서는 `filter` 로 제외합니다.
+
+### 4. GitHub API 연동
 
 `https://api.github.com/users/dnsxkm/repos` 를 호출해 Projects 섹션을 동적으로 렌더링합니다.
 
@@ -81,7 +95,7 @@ portfolio/
 - **레이트 리밋**: 인증 없이 호출 시 시간당 60회 제한. 초과(HTTP 403) 시 안내 문구가 포함된 에러 상태를 표시합니다.
 - 저장소 이름·설명은 `innerHTML` 로 삽입하기 전에 HTML 특수문자를 이스케이프하여 XSS를 방지합니다.
 
-### 4. 폼 유효성 검사
+### 5. 폼 유효성 검사
 
 - 이름 · 이메일 · 메시지 **필수값** 검증
 - 이메일 **형식** 검증 (정규식)
@@ -89,7 +103,7 @@ portfolio/
 - 제출 시 `preventDefault()` 로 기본 동작을 막고 성공 메시지 표시
 - 이미 에러 상태인 필드만 입력 중(`input` 이벤트) 실시간 재검증
 
-### 5. 상태 유지
+### 6. 상태 유지
 
 다크 모드 설정을 `localStorage` (키: `portfolio-theme`) 에 저장하여 새로고침 후에도 유지됩니다.
 `<head>` 의 인라인 스크립트가 CSS 적용 전에 테마를 먼저 씌워 **화면 깜빡임(FOUC)** 을 방지합니다.
