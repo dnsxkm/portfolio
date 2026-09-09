@@ -1,56 +1,554 @@
-/* ============ 1. 리셋 ============ */
+/* ==========================================================
+   1. 리셋
+   ========================================================== */
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  box-sizing: border-box;   /* width에 padding·border 포함 → 계산이 단순해짐 */
 }
 
 html {
-  scroll-behavior: smooth;   /* Step 4 부드러운 스크롤의 절반이 이 한 줄 */
+  scroll-behavior: smooth;
 }
 
-/* ============ 2. 디자인 토큰 (라이트) ============ */
+/* ==========================================================
+   2. 디자인 토큰 (라이트)
+   ========================================================== */
 :root {
-  /* 색상 */
   --color-bg:        #ffffff;
-  --color-surface:   #f8f9fa;   /* 카드/섹션 배경 */
+  --color-surface:   #f8f9fa;
   --color-text:      #1a1a1a;
-  --color-text-weak: #666666;   /* 보조 텍스트 */
+  --color-text-weak: #666666;
   --color-border:    #e5e5e5;
   --color-primary:   #2563eb;
   --color-error:     #dc2626;
   --color-success:   #16a34a;
   --shadow-card:     0 2px 8px rgba(0, 0, 0, 0.08);
 
-  /* 폰트 */
   --font-body: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
   --fs-sm:   0.875rem;
   --fs-base: 1rem;
   --fs-lg:   1.25rem;
   --fs-xl:   2rem;
 
-  /* 간격 */
   --space-1: 0.5rem;
   --space-2: 1rem;
   --space-3: 1.5rem;
   --space-4: 2rem;
   --space-6: 4rem;
 
-  /* 기타 */
   --radius:     8px;
   --transition: 0.3s ease;
   --max-width:  1100px;
 }
 
-/* ============ 3. 디자인 토큰 (다크) — 직접 채우세요 ============ */
+/* ==========================================================
+   3. 디자인 토큰 (다크)
+   :root 와 명시도가 동점(0,1,0)이라 '아래에 선언되어서' 이긴다.
+   ========================================================== */
 [data-theme="dark"] {
   --color-bg:        #121212;
   --color-surface:   #1e1e1e;
-  --color-text:      ???;
-  --color-text-weak: ???;
-  --color-border:    ???;
-  --color-primary:   ???;
-  --color-error:     ???;
-  --color-success:   ???;
+  --color-text:      #e8e8e8;   /* 순백 아님 — 어두운 배경 위 눈부심 방지 */
+  --color-text-weak: #a0a0a0;
+  --color-border:    #333333;
+  --color-primary:   #60a5fa;   /* 어두운 배경용으로 밝게 */
+  --color-error:     #f87171;
+  --color-success:   #4ade80;
   --shadow-card:     0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* ==========================================================
+   4. body & 섹션 공통
+   ========================================================== */
+body {
+  font-family: var(--font-body);
+  font-size:   var(--fs-base);
+  line-height: 1.6;
+  background:  var(--color-bg);
+  color:       var(--color-text);
+  transition:  background var(--transition), color var(--transition);
+  padding-top: 64px;              /* fixed 헤더 높이만큼 확보 */
+}
+
+main > section {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-2);
+  scroll-margin-top: 64px;        /* 앵커 점프 시 제목이 헤더에 가리지 않게 */
+}
+
+h2 {
+  font-size: var(--fs-xl);
+  margin-bottom: var(--space-4);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ==========================================================
+   5. 헤더 & 내비게이션 — Flexbox (1차원 배치)
+   ========================================================== */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background: transparent;
+  transition: background var(--transition), box-shadow var(--transition);
+}
+
+header.scrolled {                 /* JS가 스크롤 60px 초과 시 부착 */
+  background: var(--color-surface);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+nav {
+  position: relative;             /* 모바일 드롭다운의 기준점 */
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space-1) var(--space-2);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* HTML 순서(로고→햄버거→메뉴→테마)를 화면 순서로 재배치 */
+.logo         { order: 1; margin-right: auto; font-weight: 700; font-size: var(--fs-lg); }
+.nav-menu     { order: 2; }
+.theme-toggle { order: 3; }
+.nav-toggle   { order: 4; }
+
+.nav-menu a:hover,
+.logo:hover {
+  color: var(--color-primary);
+}
+
+/* 모바일 기본: 숨김 → .active 로 열림 */
+.nav-menu {
+  display: none;
+  list-style: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-2);
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+}
+
+.nav-menu.active {
+  display: flex;
+}
+
+.nav-toggle,
+.theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  font-size: var(--fs-base);
+  padding: var(--space-1);
+}
+
+/* 햄버거: 막대 3개를 세로로 쌓음 */
+.nav-toggle {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nav-toggle span {                /* 버튼이 아니라 그 안의 span 이 막대 */
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--color-text);
+  transition: var(--transition);
+}
+
+/* ==========================================================
+   6. Hero
+   ========================================================== */
+#hero {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-2);
+}
+
+#hero h1 {
+  font-size: clamp(1.75rem, 5vw, 3rem);   /* 화면폭에 따라 자동 크기 */
+}
+
+#hero p {
+  color: var(--color-text-weak);
+}
+
+.hero-actions {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: var(--space-2);
+}
+
+/* ==========================================================
+   7. 버튼
+   ========================================================== */
+.btn {
+  display: inline-block;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  font-size: var(--fs-base);
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform var(--transition), opacity var(--transition),
+              background var(--transition), color var(--transition);
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: #ffffff;
+}
+
+.btn-outline {
+  background: transparent;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.btn-outline:hover {
+  background: var(--color-primary);
+  color: #ffffff;
+}
+
+/* ==========================================================
+   8. About
+   ========================================================== */
+.about-inner {
+  display: flex;
+  flex-direction: column;         /* 모바일: 세로 */
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.profile-img {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;              /* 비율 유지하며 꽉 채움 */
+  border-radius: 50%;
+  border: 3px solid var(--color-border);
+  flex-shrink: 0;                 /* 좁아져도 줄어들지 않음 */
+}
+
+.about-text p + p {
+  margin-top: var(--space-1);
+}
+
+/* ==========================================================
+   9. Skills — Flexbox (태그 나열)
+   ========================================================== */
+.skill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  list-style: none;
+}
+
+.skill-list li {
+  padding: var(--space-1) var(--space-2);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  font-size: var(--fs-sm);
+  transition: var(--transition);
+}
+
+.skill-list li:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* ==========================================================
+   10. Projects — Grid (2차원 배치)
+   ========================================================== */
+.projects-grid {
+  display: grid;
+  /* auto-fit + minmax = 미디어쿼리 없이 열 개수가 자동 조절됨
+     화면 900px→3열, 600px→2열, 320px→1열 */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-3);
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-3);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.project-card h3 {
+  font-size: var(--fs-lg);
+  word-break: break-word;
+}
+
+.project-card p {
+  color: var(--color-text-weak);
+  font-size: var(--fs-sm);
+  flex-grow: 1;                   /* 설명이 남는 공간을 채워 카드 높이를 맞춤 */
+}
+
+.project-card .btn {
+  align-self: flex-start;
+  font-size: var(--fs-sm);
+}
+
+.project-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  font-size: var(--fs-sm);
+  color: var(--color-text-weak);
+}
+
+/* --- 로딩 / 에러 / 빈 상태 --- */
+.state-box {
+  grid-column: 1 / -1;            /* 그리드 첫 열부터 마지막 열까지 전부 차지 */
+  text-align: center;
+  padding: var(--space-6) var(--space-2);
+  color: var(--color-text-weak);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--color-border);
+  border-top-color: var(--color-primary);   /* 한 변만 다른 색 → 회전이 보임 */
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* 애니메이션을 원치 않는 사용자 설정 존중 (접근성) */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================
+   11. Contact 폼
+   ========================================================== */
+#contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-width: 560px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-field label {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+
+.form-field input,
+.form-field textarea {
+  width: 100%;
+  padding: var(--space-1);
+  font-family: inherit;           /* 폼 요소는 body 폰트를 상속받지 않음 */
+  font-size: var(--fs-base);
+  color: var(--color-text);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  transition: border-color var(--transition);
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.form-field textarea {
+  resize: vertical;
+}
+
+.form-field input.invalid,        /* JS가 검증 실패 시 부착 */
+.form-field textarea.invalid {
+  border-color: var(--color-error);
+}
+
+.error-msg {
+  color: var(--color-error);
+  font-size: var(--fs-sm);
+  min-height: 1.2em;              /* 자리를 미리 비워둠 → 문구가 떠도 레이아웃이 안 밀림 */
+}
+
+.success-msg {
+  color: var(--color-success);
+  font-size: var(--fs-sm);
+  min-height: 1.2em;
+}
+
+#contact-form > .btn {
+  align-self: flex-start;
+}
+
+/* ==========================================================
+   12. Footer
+   ========================================================== */
+footer {
+  margin-top: var(--space-6);
+  padding: var(--space-4) var(--space-2);
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--fs-sm);
+  color: var(--color-text-weak);
+}
+
+.social-links {
+  display: flex;
+  gap: var(--space-2);
+  list-style: none;
+}
+
+.social-links a:hover {
+  color: var(--color-primary);
+}
+
+/* ==========================================================
+   13. 스크롤 탑 버튼
+   ========================================================== */
+.to-top {
+  position: fixed;
+  right: var(--space-2);
+  bottom: var(--space-2);
+  z-index: 90;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #ffffff;
+  font-size: var(--fs-lg);
+  cursor: pointer;
+  box-shadow: var(--shadow-card);
+
+  /* display:none 은 transition 이 안 먹으므로 opacity 사용.
+     안 보일 때 클릭되면 안 되므로 pointer-events 로 차단. */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition), transform var(--transition);
+}
+
+.to-top.show {                    /* JS가 스크롤 300px 초과 시 부착 */
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.to-top:hover {
+  transform: translateY(-3px);
+}
+
+/* ==========================================================
+   14. 스크롤 등장 애니메이션
+   ========================================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {                 /* Intersection Observer 가 부착 */
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================
+   15. 반응형 — 모바일 퍼스트 (min-width 로 '추가')
+   ========================================================== */
+
+/* --- 태블릿 (768px ~) --- */
+@media (min-width: 768px) {
+  .nav-toggle {
+    display: none;                /* 햄버거 숨김 */
+  }
+
+  .nav-menu {
+    display: flex;                /* 가로 한 줄로 복귀 */
+    position: static;
+    flex-direction: row;
+    width: auto;
+    padding: 0;
+    background: transparent;
+    border-top: none;
+    gap: var(--space-3);
+  }
+
+  .about-inner {
+    flex-direction: row;          /* 사진 왼쪽, 글 오른쪽 */
+    align-items: flex-start;
+    gap: var(--space-4);
+  }
+
+  main > section {
+    padding: var(--space-6) var(--space-4);
+  }
+}
+
+/* --- 데스크톱 (1024px ~) --- */
+@media (min-width: 1024px) {
+  .profile-img {
+    width: 220px;
+    height: 220px;
+  }
+
+  #hero {
+    min-height: 90vh;
+  }
 }
