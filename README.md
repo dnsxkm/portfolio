@@ -72,13 +72,14 @@ portfolio/
 GitHub API가 자동으로 불러오는 목록과 달리, 이 섹션은 직접 작성한 마크업입니다.
 
 - App Store: https://apps.apple.com/kr/app/코인-레벨/id6805023348
-- iOS 앱 소스: https://github.com/dnsxkm/Brokoin
-- 백엔드 소스: https://github.com/dnsxkm/coin-backend
+- 소스 코드: 비공개 저장소
 
 바이낸스 무기한 선물 시장 데이터를 실시간으로 받아 캔들 차트 · 지지/저항 · 고래 흐름 · 강제 청산 ·
 시장 전체 지표를 보여줍니다. 로그인 · 인앱 결제 · 광고가 없습니다.
 
-> `js/main.js` 의 `FEATURED_REPOS` 배열에 두 저장소를 등록해, 아래 자동 목록에서는 `filter` 로 제외합니다.
+앱 스크린샷 5장(홈 · 차트 · 고래 흐름 · 강제 청산 · 알림)을 `figure`/`figcaption` 으로 설명과 함께 배치했습니다.
+
+> `js/main.js` 의 `FEATURED_REPOS` 배열에 등록한 저장소는 아래 자동 목록에서 `filter` 로 제외합니다.
 
 ### 4. GitHub API 연동
 

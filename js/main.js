@@ -19,7 +19,7 @@ const THEME_KEY            = 'portfolio-theme';   // localStorage 키
    querySelectorAll = 맞는 것 '전부' (NodeList)
    ========================================================== */
 const root         = document.documentElement;      // <html>
-const header       = document.querySelector('header');
+const header       = document.querySelector('body > header');
 const navToggle    = document.querySelector('.nav-toggle');
 const navMenu      = document.querySelector('.nav-menu');
 const themeToggle  = document.querySelector('.theme-toggle');

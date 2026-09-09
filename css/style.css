@@ -91,7 +91,7 @@ a {
 /* ==========================================================
    5. 헤더 & 내비게이션 — Flexbox (1차원 배치)
    ========================================================== */
-header {
+body > header {          /* 상단 고정 헤더 '하나만' 겨냥 (타입 선택자 header 는 문서 안 모든 header 에 적용됨) */
   position: fixed;
   top: 0;
   left: 0;
@@ -101,7 +101,7 @@ header {
   transition: background var(--transition), box-shadow var(--transition);
 }
 
-header.scrolled {                 /* JS가 스크롤 60px 초과 시 부착 */
+body > header.scrolled {                 /* JS가 스크롤 60px 초과 시 부착 */
   background: var(--color-surface);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 }
@@ -429,6 +429,49 @@ nav {
 
 .featured-features strong {
   color: var(--color-text);
+}
+
+/* 앱 스크린샷 갤러리 */
+.featured-shots {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-3);
+}
+
+.featured-shots figure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.featured-shots img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: #000000;              /* 로딩 중 흰 사각형이 깜빡이지 않게 */
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.featured-shots figure:hover img {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+}
+
+.featured-shots figcaption {
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--color-text-weak);
+}
+
+.featured-shots figcaption strong {
+  color: var(--color-text);
+}
+
+.featured-shots em {
+  font-style: normal;
+  color: var(--color-primary);
 }
 
 /* 기술 스택 — Skills 섹션과 같은 알약 모양으로 통일 */
