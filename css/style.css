@@ -99,11 +99,13 @@ body > header {          /* 상단 고정 헤더 '하나만' 겨냥 (타입 선�
   z-index: 100;
   background: transparent;
   transition: background var(--transition), box-shadow var(--transition);
+  
 }
 
-body > header.scrolled {                 /* JS가 스크롤 60px 초과 시 부착 */
+
+body > header.scrolled {
   background: var(--color-surface);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);   /* 0.08 → 0.25 */
 }
 
 nav {

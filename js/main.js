@@ -200,6 +200,7 @@ navLinks.forEach((link) => {
     target.scrollIntoView({ behavior: 'smooth' });
     setState({ isMenuOpen: false });
   });
+
 });
 
 /* --- 4-4. 스크롤 --- */
@@ -289,7 +290,7 @@ const loadProjects = async () => {
   setState({ projects: { status: 'loading', data: [], error: null } });
 
   try {
-    const response = await fetch(API_URL);
+    const response = await fetch(API_URL); // 응답이 올 때까지 대기
 
     // fetch는 403·404에서도 reject하지 않는다. 직접 확인해야 한다.
     if (response.status === 403) {
